@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#cdeafc">
+  <meta name="description" content="Mallow's Little Lost & Found — An immersive magical cloud world for forgotten wishes, unsent letters, and quiet dreams.">
+  <meta name="author" content="Mallow's Keeper">
+
+  <title>Mallow's Little Lost & Found ☁️ | For all the little things the world forgets</title>
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animations.css">
+
+  <!-- Modular Scripts -->
+  <script src="js/audio.js" defer></script>
+  <script src="js/memory-attic.js" defer></script>
+  <script src="js/wish-maker.js" defer></script>
+  <script src="js/storybook.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+
+  <!-- Particle Cursor Trail Canvas -->
+  <canvas id="sparkle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Cloud Parting Entrance Transition for Explore -->
+  <div class="cloud-curtain-overlay" id="cloud-curtain" aria-hidden="true">
+    <div class="cloud-curtain-wing curtain-left"></div>
+    <div class="cloud-curtain-wing curtain-right"></div>
+  </div>
+
+  <!-- Floating Sky Navigation Bar -->
+  <header class="floating-sky-nav" role="banner">
+    <div class="nav-left">
+      <button type="button" class="brand-pill" id="btn-brand-home" aria-label="Mallow's Home">
+        <span class="brand-cloud" aria-hidden="true">☁️</span>
+        <span class="brand-title">Mallow's <span class="brand-sub">Little Lost &amp; Found</span></span>
+        <span class="brand-sparkle" aria-hidden="true">✦</span>
+      </button>
+    </div>
+
+    <!-- Connected Navigation Pills -->
+    <nav class="nav-pills" aria-label="Sky World Navigation">
+      <button type="button" class="nav-pill active" id="nav-btn-home" aria-label="Home Scene">
+        <span>🏠 Home</span>
+      </button>
+      <button type="button" class="nav-pill" id="nav-btn-explore" aria-label="Explore Mallow's World">
+        <span>⭐ Explore</span>
+      </button>
+      <button type="button" class="nav-pill" id="nav-btn-attic" aria-label="The Memory Attic">
+        <span>📦 Memory Attic</span>
+      </button>
+      <button type="button" class="nav-pill" id="nav-btn-story" aria-label="The Storybook">
+        <span>📖 Storybook</span>
+      </button>
+      <button type="button" class="nav-pill" id="nav-btn-wish" aria-label="Make a Wish">
+        <span>✨ Make a Wish</span>
+      </button>
+      <button type="button" class="nav-pill secret-nav-pill" id="nav-btn-secret" aria-label="Secret Room (or tap Mallow 5 times)">
+        <span>🗝️ Secret (0/5)</span>
+      </button>
+    </nav>
+
+    <!-- Audio & Lullaby Control -->
+    <div class="nav-right">
+      <button type="button" class="lullaby-nav-btn" id="lullaby-toggle-btn" aria-pressed="false" aria-label="Toggle soothing lullaby music box">
+        <span class="lullaby-note" aria-hidden="true">🎵</span>
+        <span class="lullaby-status-text" id="lullaby-text">Lullaby</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN INTERACTIVE STAGE (Connected Experiences) -->
+  <main class="world-stage" id="world-stage">
+
+    <!-- =========================================================================
+         SCENE 1: HOME (THE OPENING SKY REALM)
+         Seamless Illustrated Landscape with Natural Typography & Controls
+         ========================================================================= -->
+    <section class="stage-section hero-scene active" id="hero-scene" aria-labelledby="hero-title">
+      <div class="hero-content-wrapper">
+
+        <!-- Left Column: Storybook Greeting & Call-To-Action (Floating Directly in Sky) -->
+        <div class="hero-text-cluster">
+          <div class="hero-eyebrow">
+            <span aria-hidden="true">✿</span>
+            <span>A GENTLE CORNER OF THE SKY</span>
+            <span aria-hidden="true">✿</span>
+          </div>
+
+          <h1 id="hero-title" class="hero-title">
+            For all the little things<br>
+            <span class="title-sub">the world forgets.</span>
+          </h1>
+
+          <p class="hero-lead">
+            Forgotten wishes, unsent letters, unfinished drawings...
+            Mallow gathers the quiet things and keeps them safe above the clouds.
+          </p>
+
+          <!-- Primary Actions -->
+          <div class="hero-actions">
+            <button type="button" class="btn-explore-main" id="hero-btn-explore">
+              <span>Explore</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </button>
+            <button type="button" class="btn-wish-sub" id="hero-btn-wish">
+              <span aria-hidden="true">✨</span>
+              <span>Make a Wish</span>
+            </button>
+          </div>
+
+          <!-- Secondary Discovery Pills -->
+          <div class="hero-quick-links">
+            <button type="button" class="quick-pill" id="hero-btn-attic">
+              <span>📦 Memory Attic</span>
+            </button>
+            <button type="button" class="quick-pill" id="hero-btn-story">
+              <span>📖 Storybook</span>
+            </button>
+            <button type="button" class="quick-pill" id="hero-btn-meet">
+              <span>☁️ Meet Mallow ♡</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mallow Speech Bubble & Touch Target Positioned Over Mascot in Landscape -->
+        <div class="mallow-scene-anchor">
+          <div class="speech-bubble" id="mallow-speech-bubble" role="status" aria-live="polite">
+            <span id="mallow-bubble-text">Hi! I'm Mallow ♡ Tap me 5 times!</span>
+            <span class="bubble-tail" aria-hidden="true"></span>
+          </div>
+          <button type="button" class="mallow-touch-target" id="mallow-touch-target" aria-label="Mallow the cloud mascot. Tap 5 times to reveal the secret room!"></button>
+        </div>
+
+        <!-- The Cloud College Pin on the Floating Castle Island -->
+        <div class="college-island-pin-hotspot">
+          <button type="button" class="college-pin-button" id="pin-cloud-college" aria-haspopup="dialog" aria-label="Discover The Cloud College on the floating island">
+            <span class="pin-icon" aria-hidden="true">🏛️</span>
+            <span class="pin-text">
+              <span class="pin-tag">SPECIAL DISCOVERY</span>
+              <span class="pin-name">The Cloud College ✧</span>
+            </span>
+          </button>
+        </div>
+
+        <!-- Illustrated Wooden Signpost Planks on the Path -->
+        <div class="signpost-overlay-bridge" role="group" aria-label="World Destinations Signpost">
+          <button type="button" class="bridge-sign-arrow" id="bridge-sign-attic" aria-label="Visit Memory Attic">
+            <span aria-hidden="true">📦</span>
+            <span>Memory Attic</span>
+          </button>
+          <button type="button" class="bridge-sign-arrow" id="bridge-sign-story" aria-label="Read Storybook">
+            <span aria-hidden="true">📖</span>
+            <span>Storybook</span>
+          </button>
+          <button type="button" class="bridge-sign-arrow" id="bridge-sign-wish" aria-label="Make a Wish in the Jar">
+            <span aria-hidden="true">✨</span>
+            <span>Make a Wish</span>
+          </button>
+        </div>
+
+        <!-- Star Jar Hotspot on Right Island -->
+        <div class="star-jar-hotspot">
+          <button type="button" class="star-jar-pin-btn" id="star-jar-pin-btn" aria-label="Make a Wish in the Star Jar">
+            <span aria-hidden="true">✨</span>
+            <span>Star Jar ✧</span>
+          </button>
+        </div>
+
+        <!-- Bottom Easter Egg Teaser -->
+        <div class="hero-bottom-hint">
+          <span>Click Mallow 5 times to unlock the Secret Sanctuary 🗝️</span>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         SCENE 2: EXPLORE (THE FULL-WORLD ADVENTURE)
+         ========================================================================= -->
+    <section class="stage-section explore-scene" id="explore-scene" aria-labelledby="explore-title" hidden>
+      <!-- Top Screen Navigation Header -->
+      <div class="scene-nav-header">
+        <button type="button" class="btn-scene-back" id="btn-explore-back" aria-label="Back to Home">
+          <span aria-hidden="true">←</span>
+          <span>Back</span>
+        </button>
+        <div class="scene-title-group">
+          <h2 id="explore-title" class="scene-title">Explore</h2>
+          <p class="scene-subtitle">Step into a world of floating islands, kind hearts and forgotten little things.</p>
+        </div>
+      </div>
+
+      <div class="explore-destinations-layout">
+        <!-- Reusable In-Scene Hotspots (College, Signposts, Mallow, Star Jar) -->
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         SCENE 3: MEMORY ATTIC (WARM GLOWING ATTIC & 3 TREASURES)
+         Direct interactive elements positioned on the wooden table
+         ========================================================================= -->
+    <section class="stage-section attic-scene" id="attic-scene" aria-labelledby="attic-title" hidden>
+      <!-- Top Screen Navigation Header -->
+      <div class="scene-nav-header">
+        <button type="button" class="btn-scene-back" id="btn-attic-back" aria-label="Back to Sky">
+          <span aria-hidden="true">←</span>
+          <span>Back</span>
+        </button>
+        <div class="scene-title-group">
+          <h2 id="attic-title" class="scene-title">Memory Attic</h2>
+          <p class="scene-subtitle">Three forgotten treasures, waiting to be remembered.</p>
+        </div>
+      </div>
+
+      <!-- Desk Triggers Placed Directly on the Illustrated Objects -->
+      <div class="attic-interactive-desk">
+        <div class="attic-table-items">
+
+          <!-- Treasure 1: An Unfinished Drawing -->
+          <div class="attic-object-trigger" id="attic-card-drawing" role="button" tabindex="0" aria-label="Inspect An Unfinished Drawing">
+            <div class="object-hover-halo">
+              <span class="object-sparkle">✧</span>
+            </div>
+            <span class="object-badge-label">An Unfinished Drawing</span>
+          </div>
+
+          <!-- Treasure 2: An Unsent Letter -->
+          <div class="attic-object-trigger" id="attic-card-letter" role="button" tabindex="0" aria-label="Inspect An Unsent Letter">
+            <div class="object-hover-halo">
+              <span class="object-sparkle">✧</span>
+            </div>
+            <span class="object-badge-label">An Unsent Letter</span>
+          </div>
+
+          <!-- Treasure 3: A Forgotten Wish -->
+          <div class="attic-object-trigger" id="attic-card-wish" role="button" tabindex="0" aria-label="Inspect A Forgotten Wish">
+            <div class="object-hover-halo">
+              <span class="object-sparkle">✧</span>
+            </div>
+            <span class="object-badge-label">A Forgotten Wish</span>
+          </div>
+
+        </div>
+
+        <div class="attic-quote-banner">
+          <p>“Every little thing kept here is never lost forever — it simply waits until someone with a soft heart comes looking.”</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         SCENE 4: MAKE A WISH (CENTRAL GLASS JAR WITH GLOWING STARS)
+         Integrated controls on the starry cloud cavern
+         ========================================================================= -->
+    <section class="stage-section wish-scene" id="wish-scene" aria-labelledby="wish-title" hidden>
+      <!-- Top Screen Navigation Header -->
+      <div class="scene-nav-header">
+        <button type="button" class="btn-scene-back" id="btn-wish-back" aria-label="Back to World">
+          <span aria-hidden="true">←</span>
+          <span>Back</span>
+        </button>
+        <div class="scene-title-group">
+          <h2 id="wish-title" class="scene-title">Make a Wish</h2>
+          <p class="scene-subtitle">Small wishes, big dreams...</p>
+        </div>
+      </div>
+
+      <!-- STATE A: WISH INPUT LAYOUT -->
+      <div class="wish-chamber-layout" id="wish-state-input">
+
+        <!-- Left: Category Pills -->
+        <div class="wish-categories-col" role="radiogroup" aria-label="Wish Theme Category">
+          <span class="col-heading">I am wishing:</span>
+
+          <button type="button" class="wish-category-btn active cat-myself" role="radio" aria-checked="true" data-wish="myself">
+            <span class="cat-icon" aria-hidden="true">🌸</span>
+            <span>For myself</span>
+          </button>
+
+          <button type="button" class="wish-category-btn cat-love" role="radio" aria-checked="false" data-wish="love">
+            <span class="cat-icon" aria-hidden="true">🔮</span>
+            <span>For someone I love</span>
+          </button>
+
+          <button type="button" class="wish-category-btn cat-future" role="radio" aria-checked="false" data-wish="future">
+            <span class="cat-icon" aria-hidden="true">📖</span>
+            <span>For my future</span>
+          </button>
+
+          <button type="button" class="wish-category-btn cat-world" role="radio" aria-checked="false" data-wish="world">
+            <span class="cat-icon" aria-hidden="true">🌍</span>
+            <span>For the world</span>
+          </button>
+        </div>
+
+        <!-- Center: Pulse Ring Over Central Jar in Artwork -->
+        <div class="wish-center-jar-spot">
+          <div class="jar-glow-pulse-ring" aria-hidden="true"></div>
+          <div class="curved-star-carrier" id="curved-star-carrier" aria-hidden="true">
+            <span class="flying-wish-star">⭐</span>
+          </div>
+        </div>
+
+        <!-- Right: Wish Composer Box -->
+        <div class="wish-composer-box">
+          <h3 class="composer-title">Choose a wish</h3>
+          <p class="composer-prompt">Type your quiet thought or whispered hope:</p>
+
+          <div class="composer-input-wrap">
+            <label for="wish-text-input" class="visually-hidden">Your Wish</label>
+            <input type="text" id="wish-text-input" class="wish-text-input" maxlength="120" placeholder="Type your wish here..." autocomplete="off">
+          </div>
+
+          <button type="button" class="btn-send-wish-star" id="btn-send-wish-star">
+            <span>Send My Wish</span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- STATE B: WISH CONFIRMATION -->
+      <div class="wish-confirmation-overlay" id="wish-state-confirm" hidden>
+        <span class="confirm-star-badge" aria-hidden="true">⭐</span>
+        <h3 class="confirm-title">Your wish is on its way...</h3>
+        <p class="confirm-lead" id="confirm-lead-text">
+          A little star just found its way into the jar.<br>
+          Thank you for sharing your magic...
+        </p>
+        <div class="confirm-actions">
+          <button type="button" class="btn-primary" id="btn-wish-home">Back to Home</button>
+          <button type="button" class="btn-ghost-sm" id="btn-wish-again">✨ Make Another Wish</button>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- =========================================================================
+         SCENE 5: STORYBOOK (OPEN-BOOK 4-STORY EXPERIENCE)
+         ========================================================================= -->
+    <section class="stage-section story-scene" id="story-scene" aria-labelledby="story-title" hidden>
+      <!-- Top Screen Navigation Header -->
+      <div class="scene-nav-header">
+        <button type="button" class="btn-scene-back" id="btn-story-back" aria-label="Back to World">
+          <span aria-hidden="true">←</span>
+          <span>Back</span>
+        </button>
+        <div class="scene-title-group">
+          <h2 id="story-title" class="scene-title">Storybook</h2>
+          <p class="scene-subtitle">Four little stories, one big world.</p>
+        </div>
+      </div>
+
+      <div class="story-content-stage">
+
+        <!-- Mode 1: Shelf Overview Grid -->
+        <div class="story-shelf-view" id="story-shelf-view">
+          <div class="story-cards-grid">
+
+            <button type="button" class="story-preview-card" data-story="1" aria-label="Read Story 1: The Lost Button">
+              <div class="story-card-art">
+                <svg viewBox="0 0 100 80" role="img" aria-label="A mother-of-pearl coat button">
+                  <rect width="100" height="80" fill="#eaf5fe"/>
+                  <circle cx="50" cy="40" r="22" fill="#ffffff" stroke="#c0dcf7" stroke-width="2.5"/>
+                  <circle cx="50" cy="40" r="16" fill="#f5faff" stroke="#d5e8fb" stroke-width="1.2"/>
+                  <circle cx="45" cy="36" r="2" fill="#7baad7"/>
+                  <circle cx="55" cy="36" r="2" fill="#7baad7"/>
+                  <circle cx="45" cy="44" r="2" fill="#7baad7"/>
+                  <circle cx="55" cy="44" r="2" fill="#7baad7"/>
+                  <path d="M 45 36 L 55 44 M 55 36 L 45 44" stroke="#ffb884" stroke-width="1.4"/>
+                </svg>
+              </div>
+              <h3 class="story-card-title">The Lost Button</h3>
+              <p class="story-card-sub">A pearl button that fell from a winter coat.</p>
+              <span class="story-read-action">Read story →</span>
+            </button>
+
+            <button type="button" class="story-preview-card" data-story="2" aria-label="Read Story 2: The Wandering Sock">
+              <div class="story-card-art">
+                <svg viewBox="0 0 100 80" role="img" aria-label="Striped woollen sock with wings">
+                  <rect width="100" height="80" fill="#f7f0fd"/>
+                  <path d="M 42 16 L 58 16 L 58 45 L 75 56 L 68 68 L 40 50 L 42 16 Z" fill="#ffeaf2" stroke="#e8a8c8" stroke-width="2"/>
+                  <line x1="42" y1="24" x2="58" y2="24" stroke="#87c7fc" stroke-width="2.5"/>
+                  <line x1="42" y1="32" x2="58" y2="32" stroke="#ffcb3d" stroke-width="2.5"/>
+                  <line x1="42" y1="40" x2="58" y2="40" stroke="#87c7fc" stroke-width="2.5"/>
+                  <circle cx="68" cy="62" r="3" fill="#ffa8c5"/>
+                </svg>
+              </div>
+              <h3 class="story-card-title">The Wandering Sock</h3>
+              <p class="story-card-sub">Slipped away on a grand sky adventure.</p>
+              <span class="story-read-action">Read story →</span>
+            </button>
+
+            <button type="button" class="story-preview-card" data-story="3" aria-label="Read Story 3: The Shy Star">
+              <div class="story-card-art">
+                <svg viewBox="0 0 100 80" role="img" aria-label="A little golden star among clouds">
+                  <rect width="100" height="80" fill="#eaf0fc"/>
+                  <circle cx="50" cy="40" r="28" fill="#fff9d6" opacity="0.6"/>
+                  <polygon points="50,22 54,34 66,35 57,43 60,55 50,48 40,55 43,43 34,35 46,34" fill="#ffcb3d" stroke="#d68f0b" stroke-width="1.5"/>
+                  <circle cx="47" cy="38" r="1.5" fill="#4d3209"/>
+                  <circle cx="53" cy="38" r="1.5" fill="#4d3209"/>
+                </svg>
+              </div>
+              <h3 class="story-card-title">The Shy Star</h3>
+              <p class="story-card-sub">Too shy to shine until Mallow came along.</p>
+              <span class="story-read-action">Read story →</span>
+            </button>
+
+            <button type="button" class="story-preview-card" data-story="4" aria-label="Read Story 4: The Little Cloud">
+              <div class="story-card-art">
+                <svg viewBox="0 0 100 80" role="img" aria-label="Mallow founding the Cloud College">
+                  <rect width="100" height="80" fill="#eef7fe"/>
+                  <path d="M 30 52 C 18 52, 12 40, 18 28 C 15 16, 30 6, 44 10 C 52 0, 78 0, 84 10 C 98 6, 108 16, 104 28 C 110 40, 104 52, 90 52 Z" fill="#ffffff" stroke="#b2d4f2" stroke-width="2"/>
+                  <rect x="52" y="24" width="14" height="18" fill="#ffecc2" stroke="#d9ad68" stroke-width="1.2"/>
+                  <polygon points="59,12 50,24 68,24" fill="#8d7ec6"/>
+                </svg>
+              </div>
+              <h3 class="story-card-title">The Little Cloud</h3>
+              <p class="story-card-sub">How Mallow built the Cloud College sanctuary.</p>
+              <span class="story-read-action">Read story →</span>
+            </button>
+
+          </div>
+        </div>
+
+        <!-- Mode 2: Open Book Reader -->
+        <div class="story-reader-view" id="story-reader-view" hidden>
+          <div class="open-storybook-container">
+            <div class="book-spread" id="book-spread">
+
+              <!-- Left Page: Story Scene Painting -->
+              <div class="book-page page-left">
+                <div class="story-illustration-frame">
+                  <img src="assets/backgrounds/wish-chamber.jpg" alt="Story scene illustration" class="story-art-img" id="reader-story-art" loading="lazy">
+                  <div class="illustration-caption-badge" id="reader-caption-badge">Chapter III</div>
+                </div>
+              </div>
+
+              <!-- Right Page: Story Prose -->
+              <div class="book-page page-right">
+                <div>
+                  <span class="story-flourish" aria-hidden="true">✦ ✿ ✦</span>
+                  <h3 class="reader-chapter-title" id="reader-chapter-title">The Shy Star</h3>
+
+                  <div class="reader-text-body" id="reader-text-body">
+                    <p>High above the clouds, there lived a little star who was too shy to shine.</p>
+                    <p>It watched the world from afar, waiting for the right moment.</p>
+                    <p>One day, Mallow showed it that it was already special — just by being itself.</p>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="reader-controls-bar">
+                    <button type="button" class="btn-page-nav" id="btn-reader-prev" aria-label="Previous Story">← Previous</button>
+                    <span class="reader-page-indicator" id="reader-page-indicator">Story 3 of 4</span>
+                    <button type="button" class="btn-page-nav" id="btn-reader-next" aria-label="Next Story">Next →</button>
+                  </div>
+                  <div class="reader-shelf-link">
+                    <button type="button" class="btn-text-link" id="btn-reader-to-shelf">📚 View all 4 stories</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         SCENE 6: SECRET ROOM (EASTER EGG SANCTUARY)
+         ========================================================================= -->
+    <section class="stage-section secret-scene" id="secret-scene" aria-labelledby="secret-title" hidden>
+      <div class="secret-confetti-layer" id="secret-confetti" aria-hidden="true"></div>
+
+      <div class="secret-dialog-card">
+        <span class="secret-badge-tag">✨ SECRET ROOM UNLOCKED ✨</span>
+        <h2 id="secret-title" class="secret-card-heading">You found the secret room! ⭐</h2>
+        <p class="secret-card-quote">“Not all treasures are lost... some are just waiting to be found.”</p>
+
+        <p class="secret-card-body">
+          You took the time to tap Mallow five times! Whenever the world gets too noisy or cold,
+          all the quiet smiles and soft thoughts are kept safe right here.
+          You are now an <strong>Honorary Cloud Guardian</strong>.
+        </p>
+
+        <div class="secret-decree-box">
+          <span class="decree-seal" aria-hidden="true">★</span>
+          <span class="decree-title">SEAL OF MALLOW</span>
+          <span class="decree-sub">Visitor #000,042 • Keeper of Soft Dreams</span>
+        </div>
+
+        <div class="secret-action-row">
+          <button type="button" class="btn-primary" id="btn-secret-explore">⭐ Explore More</button>
+          <button type="button" class="btn-ghost-sm" id="btn-secret-close">Back to Home</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- =========================================================================
+       MODAL 1: ATTIC TREASURE DETAIL (Scalloped Parchment Poem Card)
+       ========================================================================= -->
+  <dialog class="treasure-detail-modal" id="treasure-detail-modal" aria-labelledby="detail-modal-title">
+    <div class="treasure-modal-container">
+      <button type="button" class="btn-modal-close" id="btn-close-treasure-modal" aria-label="Close treasure story">✕</button>
+
+      <!-- Left: Illustrated Object Artwork -->
+      <div class="treasure-modal-artwork" id="treasure-modal-artwork"></div>
+
+      <!-- Right: Scalloped Parchment Poem -->
+      <div class="treasure-parchment-card">
+        <h3 class="parchment-title" id="detail-modal-title">★ An Unsent Letter</h3>
+        <div class="parchment-story-prose" id="parchment-story-prose"></div>
+        <div class="parchment-footer">
+          <button type="button" class="btn-parchment-close" id="btn-parchment-close">Close</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+
+  <!-- =========================================================================
+       MODAL 2: THE CLOUD COLLEGE DISCOVERY (Integrated College Building)
+       ========================================================================= -->
+  <dialog class="college-detail-modal" id="college-detail-modal" aria-labelledby="college-modal-title">
+    <div class="college-modal-container">
+      <button type="button" class="btn-modal-close" id="btn-close-college-modal" aria-label="Close College discovery">✕</button>
+
+      <div class="college-modal-hero-art">
+        <img src="assets/backgrounds/college-building.jpg" alt="The Cloud College of Lost & Found perched atop floating cliffs with waterfalls" class="college-modal-img">
+        <span class="college-floating-crest">🏛️ ACADEMY OF LOST DREAMS</span>
+      </div>
+
+      <div class="college-modal-body">
+        <span class="college-eyebrow">FLOATING ISLAND DISCOVERY • TERRACE #01</span>
+        <h3 class="college-heading" id="college-modal-title">The Cloud College of Lost &amp; Found</h3>
+
+        <p class="college-prose">
+          Perched on the highest mossy terrace where the rainbows arch across the sky stands the majestic <strong>Cloud College</strong>.
+          It was founded to shelter all the bright, earnest hopes that students and dreamers leave behind:
+        </p>
+
+        <ul class="college-discovery-list">
+          <li><strong>Unfinished Graduation Theses:</strong> Ambitious ideas folded into paper cranes and whispered to the midnight quad.</li>
+          <li><strong>Dormitory Letters:</strong> Warm notes written to friends over cold dining hall tea and rain on the window.</li>
+          <li><strong>Youthful Optimism:</strong> The brave spark that believes learning can heal the world.</li>
+        </ul>
+
+        <p class="college-closing-quote">
+          “Mallow lights the college bell towers with starlight every evening so no student ever forgets the bravery of their own beginnings.”
+        </p>
+
+        <div class="college-modal-actions">
+          <button type="button" class="btn-primary" id="btn-ring-college-bell">🔔 Ring the College Bell</button>
+          <button type="button" class="btn-secondary" id="btn-close-college-btn">Explore More Islands</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+
+  <!-- =========================================================================
+       MODAL 3: MEET MALLOW (Fluffy Character Badges)
+       ========================================================================= -->
+  <dialog class="meet-mallow-modal" id="meet-mallow-modal" aria-labelledby="meet-heading">
+    <div class="meet-modal-container">
+      <button type="button" class="btn-modal-close" id="btn-close-meet-modal" aria-label="Close Meet Mallow">✕</button>
+
+      <div class="meet-modal-header">
+        <h2 id="meet-heading" class="meet-title">Meet Mallow ⭐</h2>
+        <p class="meet-subtitle">A tiny cloud with a big heart.</p>
+      </div>
+
+      <div class="meet-body-grid">
+        <div class="meet-visual-col">
+          <svg viewBox="0 0 160 140" width="140" height="122" role="img" aria-label="Mallow sitting on a cloud">
+            <ellipse cx="80" cy="115" rx="55" ry="18" fill="rgba(255,255,255,0.7)"/>
+            <path d="M 45 95 C 28 95, 20 80, 27 65 C 22 47, 40 32, 58 38 C 68 22, 102 22, 112 38 C 130 32, 148 47, 143 65 C 150 80, 142 95, 125 95 Z" fill="#ffffff" stroke="#c0dcf7" stroke-width="2.5"/>
+            <ellipse cx="52" cy="74" rx="8" ry="4.5" fill="#ffa8c5" opacity="0.85"/>
+            <ellipse cx="118" cy="74" rx="8" ry="4.5" fill="#ffa8c5" opacity="0.85"/>
+            <circle cx="64" cy="65" r="5" fill="#2d274c"/>
+            <circle cx="106" cy="65" r="5" fill="#2d274c"/>
+            <circle cx="62" cy="63" r="1.6" fill="#ffffff"/>
+            <circle cx="104" cy="63" r="1.6" fill="#ffffff"/>
+            <path d="M 80 70 Q 85 76 90 70" fill="none" stroke="#3f3764" stroke-width="1.8" stroke-linecap="round"/>
+            <polygon points="122,50 124,55 129,56 125,59 126,64 122,61 118,64 119,59 115,56 120,55" fill="#ffcb3d"/>
+          </svg>
+          <p class="meet-caption">“A little cloud with an enormous heart.”</p>
+        </div>
+
+        <div class="meet-pills-col">
+          <div class="detail-pill">
+            <span class="pill-icon" aria-hidden="true">🍄</span>
+            <span class="pill-key">Species:</span>
+            <span class="pill-val">Cloud Spirit</span>
+          </div>
+          <div class="detail-pill">
+            <span class="pill-icon" aria-hidden="true">☁️</span>
+            <span class="pill-key">Looks:</span>
+            <span class="pill-val">Fluffy • Soft • Tiny</span>
+          </div>
+          <div class="detail-pill">
+            <span class="pill-icon" aria-hidden="true">⭐</span>
+            <span class="pill-key">Personality:</span>
+            <span class="pill-val">Kind • Curious • Brave</span>
+          </div>
+          <div class="detail-pill">
+            <span class="pill-icon" aria-hidden="true">🗝️</span>
+            <span class="pill-key">Profession:</span>
+            <span class="pill-val">Keeper of Forgotten Things</span>
+          </div>
+          <div class="detail-pill">
+            <span class="pill-icon" aria-hidden="true">🏛️</span>
+            <span class="pill-key">Sanctuary:</span>
+            <span class="pill-val">The Cloud College &amp; Attic</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+</body>
+</html>

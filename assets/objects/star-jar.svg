@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 180" width="140" height="180">
+  <defs>
+    <radialGradient id="jarGlassGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+      <stop offset="60%" stop-color="#bfe4fc" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#7fc1f9" stop-opacity="0.15"/>
+    </radialGradient>
+    <radialGradient id="starCenterGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fffbcf" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#ffcb3d" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Wooden Base -->
+  <ellipse cx="70" cy="162" rx="46" ry="12" fill="#d9ad68" stroke="#9e7535" stroke-width="2.5"/>
+  <rect x="32" y="152" width="76" height="12" rx="3" fill="#e8c284" stroke="#9e7535" stroke-width="2"/>
+  <!-- Bell Glass Jar -->
+  <path d="M 36 152 C 28 85, 34 35, 70 25 C 106 35, 112 85, 104 152 Z" fill="url(#jarGlassGlow)" stroke="#a2ccf2" stroke-width="3"/>
+  <circle cx="70" cy="22" r="7" fill="#a2ccf2" stroke="#68a9e8" stroke-width="2"/>
+  <!-- Glowing Center Star -->
+  <circle cx="70" cy="95" r="28" fill="url(#starCenterGlow)"/>
+  <polygon points="70,72 76,88 92,90 80,102 84,118 70,110 56,118 60,102 48,90 64,88" fill="#ffcb3d" stroke="#d68f0b" stroke-width="1.8"/>
+  <circle cx="70" cy="95" r="4" fill="#ffffff"/>
+  <!-- Glass Reflection Sheen -->
+  <path d="M 46 135 C 42 90, 48 55, 68 40" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" opacity="0.85"/>
+</svg>
